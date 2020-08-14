@@ -1,0 +1,21 @@
+version: '3.1'
+services:
+  elasticsearch:
+    image: elasticsearch:7.8.1
+    environment:
+      - ES_JAVA_OPTS=-Xms128m -Xmx128m
+      - discovery.type=single-node
+    volumes:
+      - ./data:/usr/share/elasticsearch/data
+      #ik中文分词
+      - ./plugins:/usr/share/elasticsearch/plugins
+      #近义词配置文件,用内置的synonym实现同义词功能
+      - ./config/my_analysis:/usr/share/elasticsearch/config/my_analysis
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - elk
+networks:
+    elk:
+        external: true

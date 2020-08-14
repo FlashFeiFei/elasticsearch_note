@@ -1,0 +1,31 @@
+PUT my_test
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_ik_synonym": {
+          "type": "custom",
+          "tokenizer": "ik_max_word",
+          "filter": [
+            "my_synonym_filter"
+          ]
+        }
+      },
+      "filter": {
+        "my_synonym_filter": {
+          "type": "synonym",
+          "synonyms_path": "my_analysis/synonym.txt"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "content":{
+        "type":"text",
+        "analyzer": "my_ik_synonym",
+        "search_analyzer": "my_ik_synonym"
+      }
+    }
+  }
+}
